@@ -1,0 +1,278 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Top Navigation Bar */
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #757f9a, #d7dde8);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.logo h1 {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.logo span {
+    color: #BFC0C0;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.signout-btn, .profile-btn {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.signout-btn i, .profile-btn i {
+    margin-right: 5px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 200px;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    height: 100%;
+    padding: 20px;
+    background-color: #2C3E50;
+    color: white;
+}
+
+.sidebar .btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #34495E;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s;
+}
+
+.sidebar .btn:hover {
+    background-color: #4A6FA5;
+}
+
+.add-btn i, .mydrive-btn i {
+    margin-right: 5px;
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 0; /* Adjust this value to reduce the gap */
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 220px;
+    padding: 40px;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background-color: #757f9a;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #5c677d;
+}
+
+.folders, .files {
+    margin-bottom: 20px;
+}
+
+.folder-item, .file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.folder-link, .file-item span {
+    font-weight: bold;
+}
+
+.download-btn, .delete-btn, .share-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.delete-btn {
+    color: #E74C3C;
+}
+
+.delete-btn:hover {
+    color: #C0392B;
+}
+
+.share-btn {
+    color: #3498DB;
+}
+
+.share-btn:hover {
+    color: #2980B9;
+}
+
+/* Form Styling */
+.form input[type="text"], .form input[type="file"], .form button {
+    padding: 10px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(100% - 22px); /* Account for padding and border */
+}
+
+.form button {
+    background-color: #2ECC71;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form button:hover {
+    background-color: #27AE60;
+}
+
+/* Upload Progress Bar */
+.progress-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background-color: #ddd;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0;
+    background-color: #16a085;
+    transition: width 0.5s ease-in-out;
+}
+
+#uploadSpeed {
+    position: fixed;
+    bottom: 15px;
+    left: 10px;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #ECF0F1;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.modal-content p, .modal-content input, .modal-content button {
+    margin-bottom: 10px;
+}
+
+.modal-content button {
+    background-color: #3498DB;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background-color: #2980B9;
+}
+
+.close-btn {
+    cursor: pointer;
+    background-color: #E74C3C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+
+.close-btn:hover {
+    background-color: #C0392B;
+}

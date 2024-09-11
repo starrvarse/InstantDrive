@@ -1,0 +1,111 @@
+/* General Body Styling */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Jost', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Main Container Styling */
+.main {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Form Container Styling */
+.form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Form Labels */
+label {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #764ba2;
+}
+
+/* Input Fields Styling */
+input {
+    width: 100%;
+    max-width: 350px;
+    height: 45px;
+    margin: 10px 0;
+    padding: 0 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    background-color: #f3f3f3;
+    transition: background-color 0.3s ease-in-out;
+}
+
+input:focus {
+    background-color: #e0e0e0;
+    outline: none;
+}
+
+/* Button Styling */
+button {
+    width: 100%;
+    max-width: 350px;
+    height: 45px;
+    margin: 20px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.4s ease-in-out;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Links and Text Elements */
+p {
+    margin-top: 15px;
+    font-size: 0.9em;
+}
+
+p a {
+    color: #764ba2;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+p a:hover {
+    color: #667eea;
+}
+
+/* Responsiveness */
+@media (max-width: 400px) {
+    .main {
+        width: 90%;
+        padding: 15px;
+    }
+
+    input, button {
+        width: 100%;
+    }
+}

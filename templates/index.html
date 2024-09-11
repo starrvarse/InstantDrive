@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIS Drive - File Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+<!-- Top Navigation Bar -->
+<div class="top-nav">
+    <div class="logo">
+        <h1>instant <span>DRIVE</span></h1>
+    </div>
+    <div class="nav-right">
+        <a href="{{ url_for('profile') }}" class="profile-btn">
+            <i class="fas fa-user-circle"></i> Profile
+        </a>
+        <a href="{{ url_for('logout') }}" class="signout-btn">
+            <i class="fas fa-sign-out-alt"></i> Sign Out
+        </a>
+    </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="dropdown">
+        <button class="btn add-btn">
+            <i class="fas fa-plus-circle"></i> Add
+        </button>
+        <div class="dropdown-content">
+            <a href="#!" id="add-folder-btn"><i class="fas fa-folder-plus"></i> Add Folder</a>
+            <a href="#!" id="add-files-btn"><i class="fas fa-file-upload"></i> Add Files</a>
+        </div>
+    </div>
+    <a href="{{ url_for('index') }}" class="btn mydrive-btn">
+        <i class="fas fa-hdd"></i> My Drive
+    </a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    {% if folder_path %}
+    <a href="{{ url_for('index', folder_path=parent_folder) }}" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+    {% endif %}
+
+    <!-- Success message after file upload -->
+    {% if success_message %}
+    <div class="success-message">
+        <p>{{ success_message }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Folder Buttons -->
+    <div class="folders">
+        {% if folders %}
+            {% for folder in folders %}
+            <div class="folder-item">
+                <a href="{{ url_for('index', folder_path=folder_path ~ '/' ~ folder) }}" class="folder-link">
+                    <i class="fas fa-folder"></i> {{ folder }}
+                </a>
+                <form action="{{ url_for('delete_file', filename=folder_path ~ '/' ~ folder) }}" method="POST" class="delete-form">
+                    <button type="submit" class="delete-btn"><i class="fas fa-trash"></i></button>
+                </form>
+                <form action="{{ url_for('generate_link', item=folder_path ~ '/' ~ folder) }}" method="POST" class="share-form">
+                    <button type="button" class="share-btn" onclick="showShareModal(event, '{{ folder_path ~ '/' ~ folder }}')">
+                        <i class="fas fa-link"></i> Share
+                    </button>
+                </form>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No folders available.</p>
+        {% endif %}
+    </div>
+
+    <!-- File List -->
+    <div class="files">
+        {% if files %}
+            {% for file in files %}
+            <div class="file-item">
+                <span><i class="fas fa-file"></i> {{ file }}</span>
+                <a href="{{ url_for('download_file', filename=folder_path ~ '/' ~ file) }}" class="download-btn">
+                    <i class="fas fa-download"></i> Download
+                </a>
+                <form action="{{ url_for('delete_file', filename=folder_path ~ '/' ~ file) }}" method="POST" class="delete-form">
+                    <button type="submit" class="delete-btn"><i class="fas fa-trash"></i></button>
+                </form>
+                <form action="{{ url_for('generate_link', item=folder_path ~ '/' ~ file) }}" method="POST" class="share-form">
+                    <button type="button" class="share-btn" onclick="showShareModal(event, '{{ folder_path ~ '/' ~ file }}')">
+                        <i class="fas fa-link"></i> Share
+                    </button>
+                </form>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No files available.</p>
+        {% endif %}
+    </div>
+
+    <!-- Form to Add Folder -->
+    <div id="folder-form" class="form" style="display:none;">
+        <form action="{{ url_for('create_folder') }}" method="POST">
+            <input type="text" name="folder_name" placeholder="Folder Name" required>
+            <input type="hidden" name="folder_path" value="{{ folder_path }}">
+            <button type="submit">Create Folder</button>
+        </form>
+    </div>
+
+    <!-- Form to Add Files -->
+    <div id="files-form" class="form" style="display:none;">
+        <form action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data">
+            <input type="file" name="files[]" multiple required>
+            <input type="hidden" name="folder_path" value="{{ folder_path }}">
+            <button type="submit">Upload Files</button>
+        </form>
+    </div>
+
+    <!-- Upload Progress Bar -->
+    <div id="progressContainer" class="progress-bar" style="display:none;">
+        <div id="progressBar" class="progress-bar-fill"></div>
+        <div id="uploadSpeed" class="upload-speed"></div>
+    </div>
+</div>
+
+<!-- Share Modal -->
+<div id="shareModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeShareModal()">&times;</span>
+        <h2>Share File/Folder</h2>
+        <p>Copy the link below to share:</p>
+        <input type="text" id="shareLink" readonly>
+        <button onclick="copyToClipboard()">Copy Link</button>
+
+        <!-- Share Options -->
+        <form method="POST" id="shareForm">
+            <label><input type="radio" name="share_option" value="anyone" checked> Anyone with the link can view/download</label><br>
+            <label><input type="radio" name="share_option" value="restricted"> Only people with permission</label><br>
+            <button type="submit">Generate Link</button>
+        </form>
+    </div>
+</div>
+
+<!-- Success Modal for File Upload -->
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeSuccessModal()">&times;</span>
+        <h2>Success</h2>
+        <p>Files have been successfully uploaded!</p>
+        <button class="close-btn" onclick="closeSuccessModal()">OK</button>
+    </div>
+</div>
+
+<!-- External JavaScript -->
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+
+</body>
+</html>
